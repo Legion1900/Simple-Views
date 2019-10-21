@@ -3,7 +3,7 @@
 
     <declare-styleable name="CustomCircleView">
         <attr name="radius" format="integer" />
-        <attr name="background" format="color" />
+        <attr name="bg_color" format="color" />
     </declare-styleable>
 
 </resources>
