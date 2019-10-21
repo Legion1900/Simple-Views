@@ -9,6 +9,7 @@
     <com.legion1900.simpleviews.views.customviews.CustomCircleView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:radius="150dp"/>
+        app:radius="150dp"
+        android:layout_gravity="center"/>
 
 </FrameLayout>

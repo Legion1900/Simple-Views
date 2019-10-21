@@ -49,15 +49,16 @@ public class CustomCircleView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        float centerX = getX() + getWidth() / 2f;
-        float centerY = getY() + getHeight() / 2f;
+        float centerX = getHeight() / 2;
+        float centerY = getWidth() / 2;
         canvas.drawCircle(centerX, centerY, radius, paint);
     }
 
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//
-//    }
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int diameter = radius * 2;
+        setMeasuredDimension(diameter, diameter);
+    }
 
     public int getRadius() {
         return radius;
