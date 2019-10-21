@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -36,8 +37,9 @@ public class CustomCircleView extends View {
     }
 
     private void init(TypedArray array) {
-        radius = array.getInt(R.styleable.CustomCircleView_radius, DEF_RADIUS);
         int defColor = getResources().getColor(DEF_COLOR_ID);
+        radius = array.getDimensionPixelSize(R.styleable.CustomCircleView_radius, DEF_RADIUS);
+        Log.d("Test", radius + "");
         background = array.getColor(R.styleable.CustomCircleView_bg_color, defColor);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(background);
