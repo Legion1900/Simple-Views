@@ -17,7 +17,15 @@ public class CustomCircleView extends View {
     private static final int DEF_COLOR_ID = R.color.colorAccent;
     private static final int DEF_RADIUS = 100;
 
-    private int radius;
+    /*
+    * Circle properties.
+    * */
+    private float radius;
+    private float cX;
+    private float cY;
+    /*
+    * Drawing properties.
+    * */
     private int background;
     private Paint paint;
 
@@ -47,20 +55,41 @@ public class CustomCircleView extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        float centerX = getHeight() / 2;
-        float centerY = getWidth() / 2;
-        canvas.drawCircle(centerX, centerY, radius, paint);
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        TODO: override it properly
+//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        float diameter = radius * 2;
+        /*
+        * Desired values.
+        * */
+        int width = Math.round(diameter + getPaddingStart() + getPaddingEnd());
+        int height = Math.round(diameter + getPaddingTop() + getPaddingBottom());
+        /*
+        * Resolved values.
+        * */
+        width = resolveSize(width, widthMeasureSpec);
+        height = resolveSize(height, heightMeasureSpec);
+        setMeasuredDimension(width, height);
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int diameter = radius * 2;
-        setMeasuredDimension(diameter, diameter);
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        float centerX = getWidth() / 2;
+        float centerY = getHeight() / 2;
+        canvas.drawCircle(centerX, centerY, radius, paint);
     }
 
-    public int getRadius() {
+
+//    private float calculateCenter() {
+//
+//    }
+//
+//    private float calculateRealRadius() {
+//
+//    }
+
+    public float getRadius() {
         return radius;
     }
 
@@ -68,7 +97,7 @@ public class CustomCircleView extends View {
         return background;
     }
 
-    public void setRadius(int radius) {
+    public void setRadius(float radius) {
         this.radius = radius;
         triggerRedraw();
     }
