@@ -18,12 +18,12 @@ public class CustomCircleView extends View {
     private static final int DEF_RADIUS = 100;
 
     /*
-    * Circle properties.
-    * */
+     * Circle properties.
+     * */
     private float radius;
     /*
-    * Drawing properties.
-    * */
+     * Drawing properties.
+     * */
     private int background;
     private Paint paint;
 
@@ -54,17 +54,15 @@ public class CustomCircleView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        TODO: override it properly
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         float diameter = radius * 2;
         /*
-        * Desired values.
-        * */
+         * Desired values.
+         * */
         int width = Math.round(diameter + getPaddingStart() + getPaddingEnd());
         int height = Math.round(diameter + getPaddingTop() + getPaddingBottom());
         /*
-        * Resolved values.
-        * */
+         * Resolved values.
+         * */
         width = resolveSize(width, widthMeasureSpec);
         height = resolveSize(height, heightMeasureSpec);
         setMeasuredDimension(width, height);
@@ -77,15 +75,6 @@ public class CustomCircleView extends View {
         float centerY = radius + getPaddingTop();
         canvas.drawCircle(centerX, centerY, radius, paint);
     }
-
-
-//    private float calculateCenter() {
-//
-//    }
-//
-//    private float calculateRealRadius() {
-//
-//    }
 
     public float getRadius() {
         return radius;
