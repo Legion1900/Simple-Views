@@ -21,8 +21,6 @@ public class CustomCircleView extends View {
     * Circle properties.
     * */
     private float radius;
-    private float cX;
-    private float cY;
     /*
     * Drawing properties.
     * */
@@ -75,8 +73,8 @@ public class CustomCircleView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        float centerX = getWidth() / 2;
-        float centerY = getHeight() / 2;
+        float centerX = radius + getPaddingStart();
+        float centerY = radius + getPaddingTop();
         canvas.drawCircle(centerX, centerY, radius, paint);
     }
 
