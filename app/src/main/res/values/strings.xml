@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Simple Views</string>
     <string name="custom_view_demo">Custom view demo</string>
+    <string name="custom_viewgroup_demo">Custom ViewGroup Demo</string>
+    <string name="test_word_last">World!</string>
+    <string name="test_word_first">Hello</string>
 </resources>
