@@ -1,34 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.activities.ReverseLayoutDemo">
 
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/add_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0">
+
         <com.legion1900.simpleviews.views.customviews.CustomReverseLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/reverse_list"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingStart="20dp"
-            android:paddingEnd="10dp">
+            android:paddingStart="@dimen/test_start_padding"
+            android:paddingEnd="@dimen/test_end_padding">
 
 
             <TextView
-                android:paddingStart="20dp"
-                android:paddingEnd="30dp"
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/test_word_last"/>
+                android:layout_marginTop="@dimen/test_top_margin"
+                android:paddingStart="@dimen/test_start_padding"
+                android:paddingEnd="@dimen/test_end_padding"
+                android:text="@string/test_word_last" />
 
             <TextView
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/test_top_margin"
                 android:text="@string/test_word_first" />
 
 
         </com.legion1900.simpleviews.views.customviews.CustomReverseLayout>
 
+    </ScrollView>
 
-</ScrollView>
+    <Button
+        android:id="@+id/add_button"
+        android:onClick="onAddElementClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_element"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".9" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
