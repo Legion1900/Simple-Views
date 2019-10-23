@@ -49,6 +49,8 @@ public class CustomReverseLayout extends ViewGroup {
             width = Math.max(width, child.getMeasuredWidth());
             height += child.getMeasuredHeight();
         }
+        width += getPaddingStart() + getPaddingEnd();
+        height += getPaddingTop() + getPaddingBottom();
         width = resolveSize(width, widthMeasureSpec);
         height = resolveSize(height, heightMeasureSpec);
         setMeasuredDimension(width, height);
@@ -57,7 +59,8 @@ public class CustomReverseLayout extends ViewGroup {
     //    TODO: see if there is call to it after addView finishes!
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        Log.d("Test", "left=" + left + " top=" + top + " right=" + right + " bottom=" + bottom);
+        Log.d("Test", "top=" + top);
+        int currentTop = getPaddingTop();
         int count = getChildCount();
         for (int i = count - 1; i >= 0; i--) {
             View child = getChildAt(i);
