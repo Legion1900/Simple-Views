@@ -36,6 +36,8 @@ public class CustomReverseLayout extends ViewGroup {
         int count = getChildCount();
         int height = 0;
         int width = 0;
+        int maxChildMarginStart = 0;
+        int maxChildMarginEnd = 0;
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
             if (child.getVisibility() == View.GONE) continue;
@@ -46,10 +48,13 @@ public class CustomReverseLayout extends ViewGroup {
                     heightMeasureSpec,
                     0
             );
+            MarginLayoutParams params = (MarginLayoutParams) child.getLayoutParams();
+            maxChildMarginStart = Math.max(maxChildMarginStart, params.getMarginStart());
+            maxChildMarginEnd = Math.max(maxChildMarginEnd, params.getMarginEnd());
             width = Math.max(width, child.getMeasuredWidth());
-            height += child.getMeasuredHeight();
+            height += child.getMeasuredHeight() + params.topMargin + params.bottomMargin;
         }
-        width += getPaddingStart() + getPaddingEnd();
+        width += getPaddingStart() + getPaddingEnd() + maxChildMarginStart + maxChildMarginEnd;
         height += getPaddingTop() + getPaddingBottom();
         width = resolveSize(width, widthMeasureSpec);
         height = resolveSize(height, heightMeasureSpec);
