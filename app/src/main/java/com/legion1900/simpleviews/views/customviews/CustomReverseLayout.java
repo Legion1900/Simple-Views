@@ -98,8 +98,8 @@ public class CustomReverseLayout extends ViewGroup {
     @Override
     protected LayoutParams generateDefaultLayoutParams() {
         return new MarginLayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT
         );
     }
 }
