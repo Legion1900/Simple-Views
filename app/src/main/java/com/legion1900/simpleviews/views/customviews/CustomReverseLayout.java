@@ -64,14 +64,28 @@ public class CustomReverseLayout extends ViewGroup {
     //    TODO: see if there is call to it after addView finishes!
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        Log.d("Test", "top=" + top);
-        int currentTop = getPaddingTop();
+        Log.d("Test", "top=" + top + " left=" + left);
+        // Getting allowed to use space.
+        left += getPaddingLeft();
+        top += getPaddingTop();
+        int childTop = getPaddingTop();
+//        right -= getPaddingRight();
+//        bottom -= getPaddingBottom();
         int count = getChildCount();
         for (int i = count - 1; i >= 0; i--) {
             View child = getChildAt(i);
             if (child.getVisibility() == View.GONE) continue;
             MarginLayoutParams params = (MarginLayoutParams) child.getLayoutParams();
-
+//            int childLeft = left + params.leftMargin;
+            int childLeft = getPaddingLeft() + params.leftMargin;
+//            int childTop = top + params.topMargin;
+            childTop += params.topMargin;
+            int childRight = childLeft + child.getMeasuredWidth();
+            int childBottom = childTop + child.getMeasuredHeight();
+            child.layout(childLeft, childTop, childRight, childBottom);
+            // Updating top for the next child processing.
+//            top += child.getMeasuredHeight() + params.bottomMargin;
+            childTop += child.getMeasuredHeight() + params.bottomMargin;
         }
     }
 
@@ -97,6 +111,7 @@ public class CustomReverseLayout extends ViewGroup {
      * */
     @Override
     protected LayoutParams generateDefaultLayoutParams() {
+//        TODO: set width to MATCH_PARENT and calculate pixel number that corresponds to 24dp at runtime
         return new MarginLayoutParams(
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT
