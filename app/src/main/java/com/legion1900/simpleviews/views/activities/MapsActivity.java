@@ -1,21 +1,26 @@
 package com.legion1900.simpleviews.views.activities;
 
+import android.location.Location;
+import android.os.Bundle;
+
 import androidx.fragment.app.FragmentActivity;
 
-import android.os.Bundle;
-import android.util.Log;
-
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.legion1900.simpleviews.R;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private FusedLocationProviderClient locationProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +31,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
-
 
     /**
      * Manipulates the map once available.
@@ -40,9 +44,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        initLocationProvider();
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//        LatLng sydney = new LatLng(-34, 151);
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    /*
+     * Initiates fused location provider and starts async query to get location.
+     * */
+    private void initLocationProvider() {
+        locationProvider = LocationServices.getFusedLocationProviderClient(this);
+        Task<Location> task = locationProvider.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                onLocationAcquired(location);
+            }
+        });
+    }
+
+    private void onLocationAcquired(Location location) {
+        if (location == null) return;
+        String titleUser = "You are here";
+        double lat = location.getLatitude();
+        double lng = location.getLongitude();
+        LatLng userLocation = new LatLng(lat, lng);
+        // Add current location marker and move camera to it
+        addMarker(userLocation, titleUser);
+        moveCameraTo(userLocation);
+    }
+
+    private void addMarker(LatLng location, String title) {
+        mMap.addMarker(new MarkerOptions().position(location).title(title));
+    }
+
+    private void moveCameraTo(LatLng location) {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12));
     }
 }
