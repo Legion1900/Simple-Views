@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Intent viewDemo;
     private Intent viewGroupDemo;
+    private Intent mapDemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +21,12 @@ public class MainActivity extends AppCompatActivity {
 
         viewDemo = new Intent(this, CircleDemo.class);
         viewGroupDemo = new Intent(this, ReverseLayoutDemo.class);
+        mapDemo = new Intent(this, MapsActivity.class);
     }
 
     public void onCircleDemoClick(View view) { startActivity(viewDemo); }
 
     public void onViewGroupDemoClick(View view) { startActivity(viewGroupDemo); }
+
+    public void onMapDemoClick(View view) { startActivity(mapDemo); }
 }

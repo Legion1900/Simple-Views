@@ -7,26 +7,38 @@
     tools:context=".views.activities.MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/view_demo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onCircleDemoClick"
         android:text="@string/custom_view_demo"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/viewgroup_demo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".1" />
+        app:layout_constraintVertical_bias=".1"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
+        android:id="@+id/viewgroup_demo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onViewGroupDemoClick"
         android:text="@string/custom_viewgroup_demo"
+        app:layout_constraintBottom_toTopOf="@id/map_demo"
+        app:layout_constraintEnd_toEndOf="@+id/view_demo"
+        app:layout_constraintStart_toStartOf="@+id/view_demo"
+        app:layout_constraintTop_toBottomOf="@+id/view_demo" />
+
+    <Button
+        android:id="@+id/map_demo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onMapDemoClick"
+        android:text="@string/map_demo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias=".1" />
+        app:layout_constraintEnd_toEndOf="@+id/viewgroup_demo"
+        app:layout_constraintStart_toStartOf="@+id/viewgroup_demo"
+        app:layout_constraintTop_toBottomOf="@+id/viewgroup_demo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

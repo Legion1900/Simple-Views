@@ -5,4 +5,6 @@
     <string name="test_word_last">World!</string>
     <string name="test_word_first">Hello</string>
     <string name="add_element">Add element</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="map_demo">Map Demo</string>
 </resources>
