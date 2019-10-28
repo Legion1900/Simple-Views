@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class MapUtilsTest {
+public class GeoUtilsTest {
     @Test
     public void addition_isCorrect() {
 

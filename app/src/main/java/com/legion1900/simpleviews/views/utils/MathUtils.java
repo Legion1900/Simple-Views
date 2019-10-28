@@ -17,4 +17,9 @@ public class MathUtils {
     public static int randomInt(int upperBound) {
         return rnd.nextInt(upperBound);
     }
+
+    public static int randomInt(int lowerBound, int upperBound) {
+        upperBound -= lowerBound;
+        return rnd.nextInt(upperBound) + lowerBound;
+    }
 }

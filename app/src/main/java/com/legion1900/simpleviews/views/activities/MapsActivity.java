@@ -18,7 +18,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.legion1900.simpleviews.R;
-import com.legion1900.simpleviews.views.utils.MapUtils;
+import com.legion1900.simpleviews.views.utils.GeoUtils;
 import com.legion1900.simpleviews.views.utils.MathUtils;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -93,8 +93,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onAddRandomMarkersClick(View view) {
         // User LanLat in meters.
         LatLng center = userMarker.getPosition();
-        double cX = MapUtils.calculateXInMeters(center.latitude, center.longitude);
-        double cY = MapUtils.calculateYInMeters(center.latitude, center.longitude);
+        double cX = GeoUtils.calculateXInMeters(center.latitude, center.longitude);
+        double cY = GeoUtils.calculateYInMeters(center.latitude, center.longitude);
         String noTitle = "";
         for (int i = 0; i < MARKERS_NUMBER; i++) {
             LatLng tmp = randomLatLng(cX, cY);
@@ -104,7 +104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private LatLng randomLatLng(double cX, double cY) {
         // Generating random X and Y in 0-centered coordinates.
-        double randomX = MathUtils.randomInt(MAX_RADIUS);
+        double randomX = MathUtils.randomInt(MIN_RADIUS, MAX_RADIUS);
         randomX *= MathUtils.getRandomSign();
         // Calculating y upper bound.
         int yMax = (int) Math.sqrt(Math.pow(MAX_RADIUS, 2) + Math.pow(randomX, 2));
@@ -113,8 +113,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Applying user location as a center of coordinate system
         randomX += cX;
         randomY += cY;
-        double lng = MapUtils.calculateLng(randomX, randomY);
-        double lat = MapUtils.calculateLat(randomY, lng);
+        double lng = GeoUtils.calculateLng(randomX, randomY);
+        double lat = GeoUtils.calculateLat(randomY, lng);
         return new LatLng(lat, lng);
     }
 
