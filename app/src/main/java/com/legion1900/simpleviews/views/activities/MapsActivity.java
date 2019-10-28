@@ -2,6 +2,7 @@ package com.legion1900.simpleviews.views.activities;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
@@ -19,7 +20,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.legion1900.simpleviews.R;
 import com.legion1900.simpleviews.views.utils.GeoUtils;
-import com.legion1900.simpleviews.views.utils.MathUtils;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -31,6 +31,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FusedLocationProviderClient locationProvider;
 
     private Marker userMarker;
+    private Marker[] rndMarkers = new Marker[MARKERS_NUMBER];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,30 +94,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onAddRandomMarkersClick(View view) {
         // User LanLat in meters.
         LatLng center = userMarker.getPosition();
-        double cX = GeoUtils.calculateXInMeters(center.latitude, center.longitude);
-        double cY = GeoUtils.calculateYInMeters(center.latitude, center.longitude);
         String noTitle = "";
         for (int i = 0; i < MARKERS_NUMBER; i++) {
-            LatLng tmp = randomLatLng(cX, cY);
-            addMarker(tmp, noTitle);
+            LatLng rndDot = GeoUtils.rndDotInRadius(center, MIN_RADIUS, MAX_RADIUS);
+            rndMarkers[i] = addMarker(rndDot, noTitle);
         }
     }
-
-    private LatLng randomLatLng(double cX, double cY) {
-        // Generating random X and Y in 0-centered coordinates.
-        double randomX = MathUtils.randomInt(MIN_RADIUS, MAX_RADIUS);
-        randomX *= MathUtils.getRandomSign();
-        // Calculating y upper bound.
-        int yMax = (int) Math.sqrt(Math.pow(MAX_RADIUS, 2) + Math.pow(randomX, 2));
-        double randomY = MathUtils.randomInt(yMax);
-        randomY *= MathUtils.getRandomSign();
-        // Applying user location as a center of coordinate system
-        randomX += cX;
-        randomY += cY;
-        double lng = GeoUtils.calculateLng(randomX, randomY);
-        double lat = GeoUtils.calculateLat(randomY, lng);
-        return new LatLng(lat, lng);
-    }
-
-
 }
