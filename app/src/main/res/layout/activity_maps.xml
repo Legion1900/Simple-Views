@@ -23,4 +23,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias=".9" />
 
+    <Button
+        android:id="@+id/btn_draw_route"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onDrawRoute"
+        android:text="@string/draw_route"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".9" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,10 +2,10 @@ package com.legion1900.simpleviews.views.activities;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -22,8 +22,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.legion1900.simpleviews.R;
+import com.legion1900.simpleviews.views.networking.impl.RouteRequester;
 import com.legion1900.simpleviews.views.utils.GeoUtils;
 
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+// TODO: implement rotation handling for dots & route;
+// TODO: implement button swap animation;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int MAX_RADIUS = 10000;
@@ -40,6 +49,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Marker userMarker;
     private Marker[] rndMarkers = new Marker[MARKERS_NUMBER];
 
+    private Button btnDrawRoute;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        btnDrawRoute = findViewById(R.id.btn_draw_route);
     }
 
     /**
@@ -124,10 +136,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 builder.build(),
                 CAMERA_ZOOM_OUT_PADDING
         ));
+
+        view.setVisibility(View.GONE);
+        btnDrawRoute.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
+    public void onDrawRoute(View view) {
+//        TODO: implement shortest route drawing
+        LatLng user = userMarker.getPosition();
+        LatLng dest = rndMarkers[0].getPosition();
+
+        RouteRequester requester = new RouteRequester(new Callback<String>() {
+
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.d("Test", response.body());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
+        Map<String, String> options = requester.buildQuery(user, dest, RouteRequester.MODE_WALKING);
+        requester.query(options);
     }
 }
