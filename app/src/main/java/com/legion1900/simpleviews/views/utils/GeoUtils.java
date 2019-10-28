@@ -1,10 +1,10 @@
 package com.legion1900.simpleviews.views.utils;
 
-public class MapUtils {
+public class GeoUtils {
     // Earth radius in m.
     private static final float R = 6378137;
 
-    private MapUtils() {}
+    private GeoUtils() {}
 
     public static double calculateXInMeters(double lat, double lng) {
         lat = Math.toRadians(lat);
