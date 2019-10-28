@@ -2,8 +2,10 @@ package com.legion1900.simpleviews.views.activities;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -12,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -91,6 +94,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return mMap.addMarker(new MarkerOptions().position(location).title(title));
     }
 
+    /*
+     * Creates and adds default marker with specified hue and title.
+     * */
+    private Marker addMarker(LatLng location, float hue, String title) {
+        return mMap.addMarker(new MarkerOptions()
+                .position(location)
+                .title(title)
+                .icon(BitmapDescriptorFactory.defaultMarker(hue))
+        );
+    }
+
     private void moveCameraTo(LatLng location) {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, CAMERA_ZOOM_DEFAULT));
     }
@@ -103,12 +117,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for (int i = 0; i < MARKERS_NUMBER; i++) {
             LatLng rndDot = GeoUtils.rndDotInRadius(center, MIN_RADIUS, MAX_RADIUS);
             builder.include(rndDot);
-            rndMarkers[i] = addMarker(rndDot, noTitle);
+            rndMarkers[i] = addMarker(rndDot, BitmapDescriptorFactory.HUE_CYAN, noTitle);
         }
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(
                 builder.build(),
                 CAMERA_ZOOM_OUT_PADDING
         ));
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 }
