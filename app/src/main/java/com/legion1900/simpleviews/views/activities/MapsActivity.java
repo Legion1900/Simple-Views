@@ -2,7 +2,6 @@ package com.legion1900.simpleviews.views.activities;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
@@ -14,6 +13,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +26,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int MAX_RADIUS = 10000;
     private static final int MIN_RADIUS = 5000;
     private static final int MARKERS_NUMBER = 10;
+    // Camera padding after zooming in pixels.
+    private static final int CAMERA_ZOOM_OUT_PADDING = 50;
+    // Default camera zoom when user location acquired.
+    private static final int CAMERA_ZOOM_DEFAULT = 12;
 
     private GoogleMap mMap;
     private FusedLocationProviderClient locationProvider;
@@ -88,16 +92,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void moveCameraTo(LatLng location) {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, CAMERA_ZOOM_DEFAULT));
     }
 
     public void onAddRandomMarkersClick(View view) {
         // User LanLat in meters.
         LatLng center = userMarker.getPosition();
         String noTitle = "";
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
         for (int i = 0; i < MARKERS_NUMBER; i++) {
             LatLng rndDot = GeoUtils.rndDotInRadius(center, MIN_RADIUS, MAX_RADIUS);
+            builder.include(rndDot);
             rndMarkers[i] = addMarker(rndDot, noTitle);
         }
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(
+                builder.build(),
+                CAMERA_ZOOM_OUT_PADDING
+        ));
     }
 }

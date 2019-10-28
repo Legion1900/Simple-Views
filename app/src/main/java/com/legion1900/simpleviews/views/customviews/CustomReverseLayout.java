@@ -61,7 +61,6 @@ public class CustomReverseLayout extends ViewGroup {
         setMeasuredDimension(width, height);
     }
 
-    //    TODO: see if there is call to it after addView finishes!
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         Log.d("Test", "top=" + top + " left=" + left);
@@ -111,7 +110,6 @@ public class CustomReverseLayout extends ViewGroup {
      * */
     @Override
     protected LayoutParams generateDefaultLayoutParams() {
-//        TODO: set width to MATCH_PARENT and calculate pixel number that corresponds to 24dp at runtime
         return new MarginLayoutParams(
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT
