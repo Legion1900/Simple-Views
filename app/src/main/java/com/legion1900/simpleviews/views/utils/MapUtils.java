@@ -21,10 +21,12 @@ public class MapUtils {
     public static double calculateLat(double y, double lng) {
         lng = Math.toRadians(lng);
         double value = y / (R * Math.sin(lng));
-        return Math.acos(value);
+        double latInRad = Math.acos(value);
+        return Math.toDegrees(latInRad);
     }
 
     public static double calculateLng(double x, double y) {
-        return Math.atan2(y, x);
+        double lngInRad = Math.atan2(y, x);
+        return Math.toDegrees(lngInRad);
     }
 }
