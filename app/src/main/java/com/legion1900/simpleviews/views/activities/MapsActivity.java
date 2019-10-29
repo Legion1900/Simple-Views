@@ -31,8 +31,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-// TODO: implement rotation handling for dots & route;
-// TODO: implement button swap animation;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int MAX_RADIUS = 10000;
